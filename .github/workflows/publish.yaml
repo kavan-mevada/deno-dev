@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
+      packages: write  # Crucial: explicitly grants permission to push to GHCR
 
     steps:
       - name: Checkout repository
