@@ -8,15 +8,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Configure the SSH daemon runtime directory
-RUN mkdir /var/run/sshd
+# Configure the SSH daemon runtime directory safely
+RUN mkdir -p /var/run/sshd
 
-# Create a non-root developer user (e.g., 'denodev') with sudo privileges
+# Create a non-root developer user ('denodev') with password 'deno'
 RUN useradd -ms /bin/bash denodev && \
-    echo "denodev:developmentpassword" | chpasswd && \
+    echo "denodev:deno" | chpasswd && \
     adduser denodev sudo
 
-# Ensure passwordless or standard sudo rights for development tasks if needed
+# Ensure standard sudo rights for development tasks
 RUN echo "denodev ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Setup SSH directory for key-based authentication
